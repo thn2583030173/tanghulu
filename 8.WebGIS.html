@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>   
+        html,
+        body,    
+    #container {
+    width: 100%;
+    height: 100%;
+    }
+    .input-card{
+        position: fixed;
+        background-color: #aaa9b0;
+        overflow-y: auto;
+        width: 150px;
+        height: 150px;
+        top: 10px;
+        right: 10px;
+    }
+    .input-card .btn{
+    margin-right: 1.2rem;
+    width: 9rem;
+    }
+    .input-card .btn:last-child{
+    margin-right: 0;
+    }
+  </style>
+  <script type="text/javascript">
+    window._AMapSecurityConfig = {
+      securityJsCode: "7936b15a7cf888440a776bd150c368a6",};  </script>
+    <script src="https://webapi.amap.com/loader.js"></script>
+    <script src="https://webapi.amap.com/maps?v=2.0&key=70cf0e15a4b62515c81aca1349708822&plugin=AMap.Driving,AMap.MoveAnimation"></script>
+
+
+</head>
+<body>
+    <div id="container"></div>
+    <div class="input-card">
+    <button class="btn" onclick="startAnimation()">开始动画</button>
+    </div>
+    <script>
+        var map = new AMap.Map("container", {
+        center:[102.752465,25.05783],
+        viewMode:'3D',
+        zoom:15,
+      });
+        marker = new AMap.Marker({
+          map: map,
+          position: [102.752465,25.05783],
+          icon: "https://a.amap.com/jsapi_demos/static/demo-center-v2/car.png",
+          offset: new AMap.Pixel(-13, -26),
+      });
+      var lineArr =[];
+      AMap.plugin(["AMap.Driving"], function () {
+      var driving = new AMap.Driving({
+        map:map,
+        policy:0, 
+      });
+      var startLngLat = [102.752465,25.05783]; 
+      var endLngLat = [102.752465,25.05783]; 
+    
+      var opts = {waypoints: [[102.760204,25.056901],[102.758908,25.059879],[102.762524,25.061611], [ 102.758095,25.062151]]};
+
+      driving.search(startLngLat, endLngLat, opts, function (status, result) {
+      console.log(status);
+      console.log(startLngLat);
+      result.routes[0].steps.forEach(function(item){
+      lineArr.push(...item.path)
+
+
+      var text = new AMap.Text({
+    position:new AMap.LngLat(102.752465,25.05783),
+    anchor:'bottom-center',
+    text:'一号门',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+map.add(text);
+
+
+
+
+
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.760204,25.056901),
+    anchor:'bottom-center',
+    text:'秋海',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.758908,25.059879),
+    anchor:'bottom-center',
+    text:'情人坡',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.762524,25.061611),
+    anchor:'bottom-center',
+    text:'体育馆',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.758402,25.061758),
+    anchor:'bottom-center',
+    text:'标本馆',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.756518,25.059671),
+    anchor:'bottom-center',
+    text:'二号门',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.76385,25.062834),
+    anchor:'bottom-center',
+    text:'三号门',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.761465,25.057255),
+    anchor:'bottom-center',
+    text:'四号门',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.753388,25.057077),
+    anchor:'bottom-center',
+    text:'五号门',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.751902,25.057598),
+    anchor:'bottom-center',
+    text:'六号门',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    
+})
+
+map.add(text);
+
+function startAnimation(){
+        marker.moveAlong(lineArr,{duration:25,})};   
+    
+        
+const position = new AMap.LngLat(102.752465,25.05783); //Marker 经纬度
+const icon = new AMap.Icon({image:'images/1731044713161.jpeg',imageSize:[30,30]})
+
+const marker = new AMap.Marker({
+  position: position,
+  icon:icon
+ 
+})
+map.add(marker);    
+
+const position1 = new AMap.LngLat(102.758402,25.061758); //Marker 经纬度
+const icon1 = new AMap.Icon({image:'images/1731044845040.webp',imageSize:[30,30]})
+
+const marker1 = new AMap.Marker({
+  position: position1,
+  icon:icon1
+ 
+})
+map.add(marker1);  
+
+const position2 = new AMap.LngLat(102.762524,25.061611); //Marker 经纬度
+const icon2 = new AMap.Icon({image:'images/1731044871366.jpeg',imageSize:[30,30]})
+
+const marker2 = new AMap.Marker({
+  position: position2,
+  icon:icon2
+ 
+})
+map.add(marker2);  
+
+const position3 = new AMap.LngLat(102.758908,25.059879); //Marker 经纬度
+const icon3 = new AMap.Icon({image:'images/1731044826290.webp',imageSize:[30,30]})
+
+const marker3 = new AMap.Marker({
+  position: position3,
+  icon:icon3
+ 
+})
+map.add(marker3);  
+
+const position4= new AMap.LngLat(102.760204,25.056901); //Marker 经纬度
+const icon4 = new AMap.Icon({image:'images/1731044731017.jpeg',imageSize:[30,30]})
+
+const marker4 = new AMap.Marker({
+  position: position4,
+  icon:icon4
+ 
+})
+map.add(marker4); 
+//AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.Geolocation','AMap.ControlBar','AMap.HawkEye','AMap.MapType'],function(){ 
+  //var toolbar = new AMap.ToolBar({
+  // position:{
+ //     right:'250px',
+ //       bottom:'50px',
+  //  }
+ // }); //缩放工具条实例化
+ // var scale = new AMap.Scale(
+    {
+  //  position:{   
+ //       bottom:'50px'
+    }
+ // }
+ // );
+ // var Geolocation = new AMap.Geolocation(
+  //  {
+  //  position:{   
+  //      right:'200px',
+  //      bottom:'50px'
+  //  }
+  //}
+ // );
+  //var ControlBar = new AMap.ControlBar(
+  //  {
+  //  position:{   
+  //      right:'400px',
+  //      bottom:'50px'
+  //  }
+  //}
+  //);
+ // var HawkEye = new AMap.HawkEye();
+ // var MapType = new AMap.MapType(
+ //   {
+ //   position:{   
+  //      right:'300px',
+  //      bottom:'150px'
+   // }
+  //}
+ // );
+ // map.addControl(MapType);
+ // map.addControl(HawkEye);
+ // map.addControl(ControlBar);
+ // map.addControl(Geolocation);
+ // map.addControl(scale);
+ // map.addControl(toolbar); //添加控件
+//});
+ 
+      });
+      });  
+      });
+   
+    
+  
+             
+        </script>
+</body>
+</html>
