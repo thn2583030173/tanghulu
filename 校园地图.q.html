@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>西林校园游</title>
+    <style>   
+      html,
+      body,    
+  #container {
+  width: 100%;
+  height: 100%;
+  }
+  .input-card{
+      position: fixed;
+      background-color: #f57309;
+      overflow-y: auto;
+      width: 150px;
+      height: 150px;
+      top: 10px;
+      right: 10px;
+  }
+  .input-card .btn{
+  margin-right: 1.2rem;
+  width: 9rem;
+  }
+  .input-card .btn:last-child{
+  margin-right: 0;
+  }
+</style>
+<script type="text/javascript">
+  window._AMapSecurityConfig = {
+    securityJsCode: "c641b3dd6fa9c2fc64b5254af83b7bfe",};  </script>
+  <script src="https://webapi.amap.com/loader.js"></script>
+  <script src="https://webapi.amap.com/maps?v=2.0&key=90baa4a70ddc567afdbbc3ef70e4ae7f&plugin=AMap.Driving,AMap.MoveAnimation"></script>
+
+
+</head>
+<body>
+  <div id="container"></div>
+  <div class="input-card">
+  <button class="btn" onclick="startAnimation()">开始动画</button>
+  </div>
+  <script>
+      var map = new AMap.Map("container", {
+      center:[102.758667, 25.059224],
+      viewMode:'2D',
+      zoom:15,
+    });//初始地图
+
+      marker = new AMap.Marker({
+        map: map,
+        position: [102.75248900,25.05775941],
+        icon:new AMap.Icon({image:'微信图片_20240906170418.jpg',imageSize:[40,40]}),
+            offset: new AMap.Pixel(0,0),
+        });
+
+    var lineArr =[];//容器
+    AMap.plugin(["AMap.Driving"], function () {
+    var driving = new AMap.Driving({
+      map:map,
+      policy:0, 
+    });
+    var startLngLat = [102.75248900,25.05775941]; 
+    var endLngLat = [102.75248900,25.05775941]; 
+    var opts = {waypoints: [[102.75950700,25.05708393],[102.75879622,25.05969348],[102.76160717,25.06227139],[102.75846362,25.06165426]] };
+    driving.search(startLngLat, endLngLat, opts, function (status, result) {
+    console.log(status);
+    console.log(startLngLat);
+    result.routes[0].steps.forEach(function(item){
+    lineArr.push(...item.path)
+
+    var text = new AMap.Text({
+    position:new AMap.LngLat(102.75950700,25.05708393),
+    anchor:'bottom-center',
+    text:'至诚楼，秋海',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    })
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.75879622,25.05969348),
+    anchor:'bottom-center',
+    text:'至真楼',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    })
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.76160717,25.06227139),
+    anchor:'bottom-center',
+    text:'田径场',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    })
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.75846362,25.06165426),
+    anchor:'bottom-center',
+    text:'图书馆',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    })
+map.add(text);
+
+var text = new AMap.Text({
+    position:new AMap.LngLat(102.75248900,25.05775941),
+    anchor:'bottom-center',
+    text:'一号门',
+    style:{'background-color':'white'},
+    Offset:[100,10]
+    })
+map.add(text);
+
+const position = new AMap.LngLat(102.75950700,25.05708393); //Marker 经纬度
+const icon = new AMap.Icon({image:'秋海.jpg',imageSize:[50,50]})
+const marker = new AMap.Marker({
+  position: position,
+  icon:icon
+})
+map.add(marker)
+
+const position1 = new AMap.LngLat(102.75879622,25.05969348); //Marker 经纬度
+const icon1 = new AMap.Icon({image:'教学楼.jpg',imageSize:[50,50]})
+const marker1 = new AMap.Marker({
+  position: position1,
+  icon:icon1
+})
+map.add(marker1)
+
+const position2 = new AMap.LngLat(102.75879622,25.05969348); //Marker 经纬度
+const icon2 = new AMap.Icon({image:'教学楼.jpg',imageSize:[50,50]})
+const marker2 = new AMap.Marker({
+  position: position2,
+  icon:icon2
+})
+map.add(marker2)
+
+const position3 = new AMap.LngLat(102.76160717,25.06227139); //Marker 经纬度
+const icon3 = new AMap.Icon({image:'田径场.jpg',imageSize:[50,50]})
+const marker3 = new AMap.Marker({
+  position: position3,
+  icon:icon3
+})
+map.add(marker3)
+
+const position4 = new AMap.LngLat(102.75846362,25.06165426); //Marker 经纬度
+const icon4= new AMap.Icon({image:'图书馆.jpg',imageSize:[50,50]})
+const marker4= new AMap.Marker({
+  position: position4,
+  icon:icon4
+})
+map.add(marker4)
+
+const position5 = new AMap.LngLat(102.75846362,25.06165426); //Marker 经纬度
+const icon5= new AMap.Icon({image:'图书馆.jpg',imageSize:[50,50]})
+const marker5= new AMap.Marker({
+  position: position5,
+  icon:icon5
+})
+map.add(marker)
+    });
+    });  
+    }); 
+  function startAnimation(){
+      marker.moveAlong(lineArr,{duration:50,})};//动画
+    
+</script>
+</body>
+</html>
