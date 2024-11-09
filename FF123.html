@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        #container {
+          width: 100%;
+          height: 100%;
+        }
+        .custom-content-marker {
+          position: relative;
+          width: 45px;
+          height: 45px;
+          ;
+        }
+
+         .custom-content-marker img {
+          width: 100%;
+          height: 100%;
+        }
+        .custom-content-marker .close-btn {
+          position: absolute;
+          top: -6px;
+          right: -8px;
+          width: 90px;
+          height: 30px;
+          font-size: 12%;
+          background: #ffffff00;
+          border-radius: 50%;
+          color: #000000;
+          text-align: center;
+          line-height: 15px;
+          box-shadow: -1px 1px 1px rgba(10, 10, 10, .2);
+        }
+        .center-mark{
+          position: relative;
+          width: 45px;
+          height: 45px;
+
+        }
+        .center-mark .text11{
+          text-align: center;
+          text-size-adjust: 20px;
+          position: absolute;
+          width: 30px;
+          height: 30px;
+          line-height: 10%;
+        }
+        .input-card{
+        position: fixed;
+        background-color: #aaa9b0;
+        overflow-y: auto;
+        width: 150px;
+        height: 150px;
+        top: 10px;
+        right: 10px;
+    }
+    .input-card .btn{
+    margin-right: 1.2rem;
+    width: 9rem;
+    }
+    .input-card .btn:last-child{
+    margin-right: 0;
+    }
+      </style>
+
+<script type="text/javascript">
+    window._AMapSecurityConfig = {
+      securityJsCode: "724e7a2436efd8705ef700ec2f44c7e4",
+    };
+  </script>
+  <script src="https://webapi.amap.com/loader.js"></script>
+<script src="https://webapi.amap.com/maps?v=2.0&key=9e79393c6a9ebf4024567e84733eac5d&plugin=
+AMap.ToolBar,AMap.Scale,AMap.ControlBar,AMap.Geolocation,AMap.Driving,
+AMap.Transfer,Amap.Walking,Amap.Riding,Amap.TruckDriving,Amap.DragRoute,
+AMap.MoveAnimation"></script>
+
+</head>
+
+<body>
+    <div id="container"></div>
+    <div class="input-card">
+    <button class="btn" onclick="startAnimation()">开始动画</button>
+    <button class="btn" onclick="circleEditor.open()" style="margin-bottom: 5px">开始编辑</button> 
+    <button class="btn" onclick="circleEditor.close()">结束编辑</button> </div>
+
+    <script>
+          const map = new AMap.Map("container", {
+          center:[102.758814,25.06031],
+          viewMode:'2D',
+          zoom:15,
+        });
+        AMap.plugin(['AMap.ToolBar','AMap.Scale','AMap.ControlBar','AMap.Geolocation'],function(){ 
+          var toolbar = new AMap.ToolBar({
+            position:{
+              right:'200px',top:'200px'
+            }
+          }); 
+          var scale=new AMap.Scale();
+          var controlBar=new AMap.ControlBar();
+          var geolocation=new AMap.Geolocation();
+          map.addControl(toolbar);
+          map.addControl(scale);
+          map.addControl(controlBar);
+          map.addControl(geolocation);
+
+});
+        const markerContent = 
+       `<div class="custom-content-marker">
+        <img src="https://img0.baidu.com/it/u=1664898078,1445090577&fm=253&fmt=auto&app=120&f=JPEG?w=500&h=501" >
+        <div class="close-btn">岩光</div>
+        </div>`
+         marker = new AMap.Marker({
+            map: map,
+            position: [102.755974,25.061726],
+            offset: new AMap.Pixel(-13, -26),
+             content:markerContent,
+        });
+
+        var lineArr =[];
+        AMap.plugin(["AMap.Driving"], function () {
+        var driving = new AMap.Driving({
+          map:map,
+          policy:0, 
+        });
+        var startLngLat = [102.755974,25.061726]; 
+        var endLngLat = [102.757977,25.061496]; 
+        var opts = {waypoints: [[102.758119,25.062596],[102.754621,25.056752]], };//途中点
+        driving.search(startLngLat, endLngLat, opts, function (status, result) {
+        console.log(status);
+        console.log(startLngLat);
+        result.routes[0].steps.forEach(function(item){
+        lineArr.push(...item.path)
+        });
+        });
+        });
+      function startAnimation(){
+          marker.moveAlong(lineArr,{duration:50,})};//动画
+          //信息
+      const markerContent1 = 
+       `<div class="custom-content-marker">
+        <img src="https://i.52112.com/icon/jpg/256/20210113/106892/4575338.jpg" >
+        <div class="close-btn">竹苑餐厅</div>
+        </div>`
+          marker1 = new AMap.Marker({
+            map: map,
+            position: [102.758059,25.062617],
+            content:markerContent1,
+            offset: new AMap.Pixel(0, 0),
+        });
+        const markerContent2 = 
+       `<div class="custom-content-marker">
+        <img src="https://img2.baidu.com/it/u=3599952705,915878469&fm=253&fmt=auto&app=138&f=JPEG?w=256&h=256" >
+        <div class="close-btn">北图书馆</div>
+        </div>`
+        marker2 = new AMap.Marker({
+            map: map,
+            position: [102.757978,25.061507],
+            content:markerContent2,
+            offset: new AMap.Pixel(0, 0),
+        });
+        const markerContent3 = 
+       `<div class="custom-content-marker">
+        <img src="https://img2.baidu.com/it/u=1839606095,382079429&fm=253&fmt=auto&app=138&f=JPEG?w=380&h=380" >
+        <div class="close-btn">西林足球场</div>
+        </div>`
+        marker3 = new AMap.Marker({
+            map: map,
+            position: [102.761873,25.062898],
+            content:markerContent3,
+            offset: new AMap.Pixel(0, 0),
+        });
+        const markerContent4 = 
+       `<div class="custom-content-marker">
+        <img src="https://tumu.swfu.edu.cn/wp-content/uploads/2019/06/logo1.png" >
+        <div class="close-btn">土木工程学院</div>
+        </div>`
+        marker4 = new AMap.Marker({
+            map: map,
+            position: [102.754623,25.056753],
+            content:markerContent4,
+            offset: new AMap.Pixel(0, 0),
+        });
+        const markerContent5 = 
+       `<div class="custom-content-marker">
+        <img src="https://img2.baidu.com/it/u=2716981753,620535962&fm=253&fmt=auto&app=138&f=JPEG?w=256&h=256" >
+        <div class="close-btn">秋海</div>
+        </div>`
+        marker5 = new AMap.Marker({
+            map: map,
+            position: [102.7601,25.057296],
+            content:markerContent5,
+            offset: new AMap.Pixel(0, 0),
+        });
+        const markerContent6 = 
+       `<div class="custom-content-marker">
+        <img src="https://img2.baidu.com/it/u=2080715210,1486754413&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500">
+        <div class="close-btn">竹苑5栋</div>
+        </div>`
+        marker6 = new AMap.Marker({
+            map: map,
+            position: [102.755823,25.061918],
+            content:markerContent6,
+            offset: new AMap.Pixel(0, 0),
+        });
+//秋海多边形
+        var pathArr1 = 
+    [
+        [102.75965,25.056942],
+        [102.760212,25.057007], 
+        [102.760539,25.057062],
+        [102.760614,25.057096], 
+        [102.76064,25.057204], 
+        [102.760575,25.057359],
+        [102.76031,25.057663], 
+        [102.760135,25.057767],
+        [102.75997,25.057816],
+        [102.759832,25.057829], 
+        [102.759795,25.057812],
+        [102.759777,25.057777],
+        [102.759758,25.057448],
+        [102.759723,25.057278],
+        [102.759615,25.057061], 
+        [102.759601,25.056998], 
+        [102.759612,25.056969],
+        [102.759612,25.056969]
+    ];
+      var polygon1 = new AMap.Polygon({
+        path: pathArr1, 
+      });
+    map.add(polygon1);
+
+    </script>
+</body>
+</html>
